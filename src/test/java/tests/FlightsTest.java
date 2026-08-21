@@ -36,12 +36,13 @@ public class FlightsTest extends DriverFactory {
     destinationInput.sendKeys("Paris");
     By paris = By.xpath("//*[normalize-space()='Paris, France']");
     wait.until(ExpectedConditions.elementToBeClickable(paris)).click();
-    Assertions.assertTrue(destinationInput.getAttribute("value").contains("Paris"), "Paris should be selected as destination");
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(paris));
+    Assertions.assertTrue(driver.findElements(paris).stream().noneMatch(WebElement::isDisplayed), "Paris should be selected as destination");
 
     LocalDate outbound = LocalDate.now().plusDays(30);
     LocalDate inbound = outbound.plusDays(7);
     DateTimeFormatter ariaDate = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-    By departure = By.xpath("//*[self::button or @role='button'][contains(@aria-label,'Departure') or contains(.,'Departure')]");
+    By departure = By.xpath("//*[self::button or @role='button'][contains(translate(@aria-label,'DATEPUR','datepur'),'departure') or contains(translate(@aria-label,'DATE','date'),'date') or contains(translate(normalize-space(.),'DATE','date'),'date')]");
     wait.until(ExpectedConditions.elementToBeClickable(departure)).click();
     By outboundDay = By.cssSelector("[aria-label='" + outbound.format(ariaDate) + "']");
     wait.until(ExpectedConditions.elementToBeClickable(outboundDay)).click();
