@@ -29,7 +29,7 @@ public class FlightsTest extends DriverFactory {
     By destination = By.id("destination");
     WebElement originInput = wait.until(ExpectedConditions.elementToBeClickable(origin));
     originInput.sendKeys("London");
-    By gatwick = By.xpath("//*[@role='option'][contains(normalize-space(.),'Gatwick') and contains(normalize-space(.),'London')]");
+    By gatwick = By.xpath("//*[@role='option' and contains(normalize-space(.),'Gatwick')]");
     wait.until(ExpectedConditions.elementToBeClickable(gatwick)).click();
     Assertions.assertEquals("gatwick-london-united-kingdom", originInput.getAttribute("value").toLowerCase().replaceAll("[^a-z]+", "-").replaceAll("(^-|-$)", ""), "Gatwick should be selected as origin");
 
