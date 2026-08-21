@@ -1,0 +1,8 @@
+[
+  {
+    "id": "kiwi-flights-autocomplete-and-search",
+    "title": "selectAsynchronousAirportsAndSearchAValidReturnFlight",
+    "description": "Selects asynchronous London and Paris airports, chooses a future return itinerary, and verifies results or a service error.",
+    "file": "src/test/java/tests/FlightsTest.java"
+  }
+]
