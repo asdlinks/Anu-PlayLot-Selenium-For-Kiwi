@@ -14,10 +14,10 @@ public class DriverFactory {
   public void createDriver() {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--window-size=1280,720");
-    options.addArguments("--headless=new");
+    if (!MaestroRecorder.headful()) options.addArguments("--headless=new");
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
-    WebDriver driver = new ChromeDriver(options);
+    WebDriver driver = MaestroEvents.decorate(new ChromeDriver(options));
     driver.manage().timeouts().implicitlyWait(Duration.ZERO);
     DRIVER.set(driver);
   }
