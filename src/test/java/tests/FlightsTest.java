@@ -43,9 +43,9 @@ public class FlightsTest extends DriverFactory {
     LocalDate inbound = outbound.plusDays(7);
     By departure = By.id("outboundDate");
     wait.until(ExpectedConditions.elementToBeClickable(departure)).click();
-    By outboundDay = By.cssSelector("[data-test='SearchFieldDatePickerDay'][data-date='" + outbound + "']");
+    By outboundDay = By.xpath("//div[@data-value='" + outbound.withDayOfMonth(1) + "']//div[@data-test='DayDateTypography' and normalize-space()='" + outbound.getDayOfMonth() + "']");
     wait.until(ExpectedConditions.elementToBeClickable(outboundDay)).click();
-    By inboundDay = By.cssSelector("[data-test='SearchFieldDatePickerDay'][data-date='" + inbound + "']");
+    By inboundDay = By.xpath("//div[@data-value='" + inbound.withDayOfMonth(1) + "']//div[@data-test='DayDateTypography' and normalize-space()='" + inbound.getDayOfMonth() + "']");
     wait.until(ExpectedConditions.elementToBeClickable(inboundDay)).click();
     Assertions.assertTrue(driver.getPageSource().contains(outbound.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))) || driver.getPageSource().contains("Return"), "Outbound and inbound dates should be accepted");
 
