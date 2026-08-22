@@ -41,12 +41,11 @@ public class FlightsTest extends DriverFactory {
 
     LocalDate outbound = LocalDate.now().plusDays(30);
     LocalDate inbound = outbound.plusDays(7);
-    DateTimeFormatter ariaDate = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-    By departure = By.xpath("//*[self::button or @role='button'][contains(translate(@aria-label,'DATEPUR','datepur'),'departure') or contains(translate(@aria-label,'DATE','date'),'date') or contains(translate(normalize-space(.),'DATE','date'),'date')]");
+    By departure = By.id("outboundDate");
     wait.until(ExpectedConditions.elementToBeClickable(departure)).click();
-    By outboundDay = By.cssSelector("[aria-label='" + outbound.format(ariaDate) + "']");
+    By outboundDay = By.cssSelector("[data-test='SearchFieldDatePickerDay'][data-date='" + outbound + "']");
     wait.until(ExpectedConditions.elementToBeClickable(outboundDay)).click();
-    By inboundDay = By.cssSelector("[aria-label='" + inbound.format(ariaDate) + "']");
+    By inboundDay = By.cssSelector("[data-test='SearchFieldDatePickerDay'][data-date='" + inbound + "']");
     wait.until(ExpectedConditions.elementToBeClickable(inboundDay)).click();
     Assertions.assertTrue(driver.getPageSource().contains(outbound.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))) || driver.getPageSource().contains("Return"), "Outbound and inbound dates should be accepted");
 
@@ -57,4 +56,5 @@ public class FlightsTest extends DriverFactory {
     Assertions.assertTrue(resultUrl.contains("gatwick-london-united-kingdom"), "Results URL should contain the selected origin: " + resultUrl);
     Assertions.assertTrue(resultUrl.contains("paris-france") || driver.getPageSource().toLowerCase().contains("service error") || driver.getPageSource().toLowerCase().contains("something went wrong"), "Results or a service error should be shown");
   }
+
 }
